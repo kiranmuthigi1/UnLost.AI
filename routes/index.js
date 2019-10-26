@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs-extra');
 const mongoose = require('mongoose');
+const spawn = require('child_process').spawn;
 const lost = require('./../models/losts.js');
 const found = require('./../models/found.js');
 
@@ -63,8 +64,24 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
 
         newimage
             .save()
-            .then((result) => {
+            .then(async (result) => {
                 console.log(result);
+                // call python script
+                const pythonProcess = spawn('python', [`${__dirname}/../scripts/hello.py`]);
+
+                pythonProcess.stdout.on('data', (data) => {
+                    console.log(data.toString('utf8'));
+                });
+
+                // delete lost images folder
+                await req.files.forEach((file, i) => {
+                    fs.unlink(`uploads/lost/${labelname}/${i}.${path.extname(file.originalname)}`, (err) => {
+                        if (err) throw err;
+                        console.log(`uploads/lost/${labelname}/${i}.${path.extname(file.originalname)} was deleted`);
+                    });
+                });
+                await fs.removeSync(`uploads/lost/${labelname}`);
+                
                 res.status(200).json({
                     status: "success"
                 });
@@ -74,6 +91,8 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
                     status: "fail"
                 });            
             });
+
+        
 
         /**
          * Delete files from Uploads folder after it has been moved to lostdb folder
