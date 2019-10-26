@@ -139,7 +139,6 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
 
                 pythonProcess.stdout.on('data', (data) => {
                     console.log(data.toString('utf8'));
-                    
                 });
 
                 newfimage
