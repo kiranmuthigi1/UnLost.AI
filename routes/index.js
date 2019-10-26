@@ -4,6 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs-extra');
 const mongoose = require('mongoose');
+const jimp = require('jimp');
 const spawn = require('child_process').spawn;
 const lost = require('./../models/losts.js');
 const found = require('./../models/found.js');
@@ -38,7 +39,17 @@ async function rearrangeFiles(labelname, files, category) {
     fs.mkdirSync(`uploads/${category}/${labelname}`, {recursive: true, mode: 770});
 
     await files.forEach((file, i) => {
-        fs.renameSync(`${file.path}`, `uploads/${category}/${labelname}/${i}.${path.extname(file.originalname)}`);
+        fs.renameSync(`${file.path}`, `uploads/${category}/${labelname}/${i}${path.extname(file.originalname)}`);
+        jimp.read(`uploads/${category}/${labelname}/${i}${path.extname(file.originalname)}`, function (err, image) {
+            if (err) {
+              console.log(err);
+            } else {
+              image
+                .resize(96, 96)
+                .write(`uploads/${category}/${labelname}/${i}.jpg`);
+            }
+        });
+        fs.unlinkSync(`uploads/${category}/${labelname}/${i}${path.extname(file.originalname)}`);
     });
     
   }
@@ -74,13 +85,13 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
                 });
 
                 // delete lost images folder
-                await req.files.forEach((file, i) => {
-                    fs.unlink(`uploads/lost/${labelname}/${i}.${path.extname(file.originalname)}`, (err) => {
-                        if (err) throw err;
-                        console.log(`uploads/lost/${labelname}/${i}.${path.extname(file.originalname)} was deleted`);
-                    });
-                });
-                await fs.removeSync(`uploads/lost/${labelname}`);
+                // await req.files.forEach((file, i) => {
+                //     fs.unlink(`uploads/lost/${labelname}/${i}.${path.extname(file.originalname)}`, (err) => {
+                //         if (err) throw err;
+                //         console.log(`uploads/lost/${labelname}/${i}.${path.extname(file.originalname)} was deleted`);
+                //     });
+                // });
+                // await fs.removeSync(`uploads/lost/${labelname}`);
                 
                 res.status(200).json({
                     status: "success"
