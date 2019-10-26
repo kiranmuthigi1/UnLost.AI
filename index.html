@@ -93,15 +93,21 @@
 							<h1>WELCOME TO UnLost.ai</h1>
               <p>We help you find your lost loved ones.</p>
               <div class="row">
-                <center>
-                    <div class="col-6">
+                
+                    <div class="col-md-6">
                       <div class="mu-primary-btn">Click Photo</div>
                     </div>
-                    <div class="col-6">
-                      <div class="mu-primary-btn">Register a Lost Person</div>
-                      <input type="file" class="mu-primary-btn" accept="image/*" capture="camera">
+                    <div class="col-md-6">
+                        <center>
+                        <h3>I found Someone!!</h3>
+                        <form method="POST" enctype='multipart/form-data' action="http://zemotacqy.tech/api/uploadfound">
+                          <input type="file" class="mu-primary-btn" name="foundImage" accept="image/*" capture="camera"/>
+                          <input type="text" class="mu-primary-btn" id="email" name="email" />
+                          <input class="mu-primary-btn" type="submit" value="submit"/>
+                        </form>
+                      </center>
                     </div>
-                </center>
+                
                 
               </div>
 							<!-- <form method="POST" enctype='multipart/form-data' action="http://zemotacqy.tech/api/uploadlost">
