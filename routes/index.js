@@ -113,7 +113,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
     }
 });
 
-router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => {
+router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, next) => {
     if(req.files.size<=0 ) {
         res.status(500).json({
             status: "fail"
@@ -129,30 +129,37 @@ router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => 
         });
 
         
-        rearrangeFiles(labelname, req.files, 'found');
+        rearrangeFiles(labelname, req.files, 'found')
+            .then(() => {
+                // call python script
+                console.log(`${__dirname}/../scripts/Central_FR.py`)
+                console.log(`${__dirname}/../uploads/found/${labelname}/0.jpg`)
+                const pythonProcess = spawn('python3', [`${__dirname}/../scripts/Central_FR.py`, `${__dirname}/../uploads/found/${labelname}/0.jpg`]);
 
-        // call python script
-        console.log(`Calling: ${__dirname}/../scripts/Central_FR.py`)
-        console.log(`Calling File name:${__dirname}/../uploads/found/${labelname}/0.jpg`)
-        const pythonProcess = spawn('python3', [`${__dirname}/../scripts/Central_FR.py`, `${__dirname}/../uploads/found/${labelname}/0.jpg`]);
+                pythonProcess.stdout.on('data', (data) => {
+                    console.log(data.toString('utf8'));
 
-        pythonProcess.stdout.on('data', (data) => {
-            console.log(data.toString('utf8'));
-        });
-
-        newfimage
-            .save()
-            .then((result) => {
-                console.log(result);
-                res.status(200).json({
-                    status: "success"
                 });
-            }).catch(err => {
+
+                newfimage
+                    .save()
+                    .then((result) => {
+                        console.log(result);
+                        res.status(200).json({
+                            status: "success"
+                        });
+                    }).catch(err => {
+                        console.log(err);
+                        res.status(500).json({
+                            status: "fail"
+                        });            
+                    });
+            })
+            .catch(err => {
                 console.log(err);
-                res.status(500).json({
-                    status: "fail"
-                });            
-            });
+            })
+
+        
         
     }
 });
