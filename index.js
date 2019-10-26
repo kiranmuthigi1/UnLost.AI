@@ -34,9 +34,9 @@ app.use(cors());
 /**
  * Routes
  */
-// const rootRoutes = require('./routes/index.js');
+const rootRoutes = require('./routes/index.js');
 
-// app.use('/api', rootRoutes);
+app.use('/api', rootRoutes);
 
 
 
