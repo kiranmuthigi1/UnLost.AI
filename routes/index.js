@@ -5,11 +5,11 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const lost = require('./../models/losts.js');
-const { exec } = require('child_process');
+const found = require('./../models/found.js');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, 'temp/');
     },
     filename: function (req, file, cb) {
         cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
@@ -33,15 +33,13 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-async function rearrangeFiles(labelname, files) {
-    fs.mkdirSync(`lostdb/${labelname}`, {recursive: true, mode: 770});
+async function rearrangeFiles(labelname, files, category) {
+    fs.mkdirSync(`uploads/${category}/${labelname}`, {recursive: true, mode: 770});
+
     await files.forEach((file, i) => {
-        // exec(`mv ${file.path} lostdb/${labelname}/${i}.${path.extname(file.originalname)}`);
-        fs.renameSync(`${file.path}`, `lostdb/${labelname}/${i}.${path.extname(file.originalname)}`);
+        fs.renameSync(`${file.path}`, `uploads/${category}/${labelname}/${i}.${path.extname(file.originalname)}`);
     });
     
-    // console.log('stdout:', stdout);
-    // console.log('stderr:', stderr);
   }
 
 
@@ -61,7 +59,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
         });
 
         
-        rearrangeFiles(labelname, req.files);
+        rearrangeFiles(labelname, req.files, 'lost');
 
         newimage
             .save()
@@ -88,7 +86,42 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
          */
         
     }
-    
 });
+
+router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => {
+    if(req.files.size<=0 ) {
+        res.status(500).json({
+            status: "fail"
+        });
+    } else {
+        const mongooseId = mongoose.Types.ObjectId();
+        const labelname = mongooseId;
+        
+        const newfimage = new found({
+            _id: mongooseId,
+            label: labelname
+
+        });
+
+        
+        rearrangeFiles(labelname, req.files, 'found');
+
+        newfimage
+            .save()
+            .then((result) => {
+                console.log(result);
+                res.status(200).json({
+                    status: "success"
+                });
+            }).catch(err => {
+                console.log(err);
+                res.status(500).json({
+                    status: "fail"
+                });            
+            });
+        
+    }
+});
+
 
 module.exports = router;
