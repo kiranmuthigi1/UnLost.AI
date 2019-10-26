@@ -27,15 +27,17 @@ def check_func(argum1):
     np.set_printoptions(threshold=sys.maxsize)
     print("inside: ", argum1)
     FRmodel = faceRecoModel(input_shape=(3, 96, 96))
-    lost = '../uploads/lost'
+    lost = '/home/zemotacqy/hack-moscow-backend/routes/../uploads/lost'
+    print("lost FilePath: ", lost)
     files= os.listdir(lost)
     print(files)
-    sys.stdout.flush()
+    #sys.stdout.flush()
     FRmodel.compile(optimizer='adam', loss=triplet_loss, metrics=['accuracy'])
+    print("Loading weitghts:")
     load_weights_from_FaceNet(FRmodel)
     cur_encoding = img_to_encoding(argum1, FRmodel)
     print(cur_encoding)
-    sys.stdout.flush()
+    #sys.stdout.flush()
     check = 0
     best_match_found = ""
     cur_b_sc= 0.7
