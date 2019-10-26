@@ -132,6 +132,8 @@ router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => 
         rearrangeFiles(labelname, req.files, 'found');
 
         // call python script
+        console.log(`${__dirname}/../scripts/Central_FR.py`)
+        console.log(`${__dirname}/../uploads/found/${labelname}/0.jpg`)
         const pythonProcess = spawn('python3', [`${__dirname}/../scripts/Central_FR.py`, `${__dirname}/../uploads/found/${labelname}/0.jpg`]);
 
         pythonProcess.stdout.on('data', (data) => {
