@@ -25,13 +25,15 @@ def triplet_loss(y_true, y_pred, alpha=0.2):
 def check_func(argum1):
 
     np.set_printoptions(threshold=sys.maxsize)
-
+    print(argum1)
     FRmodel = faceRecoModel(input_shape=(3, 96, 96))
     lost = '../uploads/lost'
     files= os.listdir(lost)
-    cur_encoding = img_to_encoding(argum1,FRmodel)
+    print(files)
     FRmodel.compile(optimizer='adam', loss=triplet_loss, metrics=['accuracy'])
     load_weights_from_FaceNet(FRmodel)
+    cur_encoding = img_to_encoding(argum1, FRmodel)
+    print(cur_encoding)
     check = 0
     best_match_found = ""
     cur_b_sc= 0.7
@@ -49,11 +51,13 @@ def check_func(argum1):
             if dist<cur_b_sc:
                 cur_b_sc = dist
                 check = 1
-                best_match_found = fadd
+                best_match_found = i
     if(check==1):
         print(best_match_found)
+        print(cur_b_sc)
         sys.stdout.flush()
     else:
+        print("NULL")
         print("NULL")
         sys.stdout.flush()
 
