@@ -77,12 +77,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
             .save()
             .then(async (result) => {
                 console.log(result);
-                // call python script
-                const pythonProcess = spawn('python', [`${__dirname}/../scripts/hello.py`]);
-
-                pythonProcess.stdout.on('data', (data) => {
-                    console.log(data.toString('utf8'));
-                });
+                
 
                 // delete lost images folder
                 // await req.files.forEach((file, i) => {
@@ -135,6 +130,13 @@ router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => 
 
         
         rearrangeFiles(labelname, req.files, 'found');
+
+        // call python script
+        const pythonProcess = spawn('python3', [`${__dirname}/../scripts/Central_FR.py`, `${__dirname}/../uploads/found/${labelname}/0.jpg`]);
+
+        pythonProcess.stdout.on('data', (data) => {
+            console.log(data.toString('utf8'));
+        });
 
         newfimage
             .save()
