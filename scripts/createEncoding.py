@@ -44,15 +44,15 @@ if __name__=="__main__":
     serverStatusResult=db.command("serverStatus")
     db = client.moscow
     collection = db.losts
-    print("abc")
     FRmodel = faceRecoModel(input_shape = (3,96,96))
     FRmodel.compile(optimizer='adam',loss=triplet_loss,metrics=['accuracy'])
     load_weights_from_FaceNet(FRmodel)
-    print("def")
     for document in collection.find({"isEncoding": False}):
-        print("/home/zemotacqy/hack-moscow-backend/uploads/lost/"+document["label"])
+        #print("/home/zemotacqy/hack-moscow-backend/uploads/lost/"+document["label"])
         createEmbed("/home/zemotacqy/hack-moscow-backend/uploads/lost/"+document["label"],FRmodel)
-        print("Done")
+        collection.update_one({"label":document["label"]}, {"$set": {"isEncoding": True}})
+    
+    print("Done")
 
 
 
