@@ -95,12 +95,12 @@
               <div class="row">
                 
                     <div class="col-md-6">
-                      <a href="/register.html"><div class="mu-primary-btn" >Register a Lost Person</div></a>
+                      <a href="./register.html"><div class="mu-primary-btn" >Register a Lost Person</div></a>
                     </div>
                     <div class="col-md-6">
                         <center>
                         <h3>I found Someone!!</h3>
-                        <form method="POST" enctype='multipart/form-data' action="http://zemotacqy.tech/api/uploadfound">
+                        <form id="registerID" method="POST" enctype='multipart/form-data' action="http://zemotacqy.tech/api/uploadfound">
                           <input type="file" class="mu-primary-btn" name="foundImage" placeholder="Click Photo" accept="image/*" capture="camera"/>
                           <input type="text" class="mu-primary-btn" id="email" name="email" />
                           <input class="mu-primary-btn" type="submit" value="submit"/>
