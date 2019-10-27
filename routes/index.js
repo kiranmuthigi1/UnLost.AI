@@ -132,17 +132,15 @@ router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => 
                 console.log(`${__dirname}/../uploads/found/${labelname}/0.jpg`)
                 const pythonProcess = spawn('python3', [`${__dirname}/../scripts/Central_FR.py`, `${__dirname}/../uploads/found/${labelname}/0.jpg`]);
 
-                var id = null, similarity = null;
+                var id, similarity;
                 pythonProcess.stdout.on('data', (data) => {
                     // console.log(data.toString('utf8'));
                     var temp = data.toString('utf8');
-                    console.log(temp);
-                    if(temp.length>5) id = temp;
+                    if(temp.length > 5) id = temp;
                     else similarity = temp;
                 });
 
-                while(id==null) {
-                    newfimage
+                newfimage
                     .save()
                     .then((result) => {
                         console.log(result);
@@ -153,8 +151,6 @@ router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => 
                             status: "fail"
                         });            
                     });
-                }
-                
             })
             .catch(err => {
                 console.log(err);
