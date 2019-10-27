@@ -9,6 +9,7 @@ const spawn = require('child_process').spawn;
 const lost = require('./../models/losts.js');
 const found = require('./../models/found.js');
 const nodemailer = require('nodemailer');
+const config = require("./../config.json");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -134,24 +135,8 @@ router.post('/uploadfound', upload.array("lostImage", 10), (req, res, next) => {
                 console.log(`${__dirname}/../uploads/found/${labelname}/0.jpg`)
                 const pythonProcess = spawn('python3', [`${__dirname}/../scripts/Central_FR.py`, `${__dirname}/../uploads/found/${labelname}/0.jpg`]);
 
-                var id, similarity;
                 pythonProcess.stdout.on('data', (data) => {
-                    // console.log(data.toString('utf8'));
-                    var temp = data.toString('utf8');
-                    if(temp.length > 5) id = temp;
-                    else {
-                        similarity = temp;
-                        console.log(id, similarity);
-                        // var transporter = nodemailer.createTransport({
-                        //     service: 'gmail',
-                        //     auth: {
-                        //         user: config.email.username,
-                        //         pass: config.email.password
-                        //     },
-                        //     secure: true,
-                        //     pool: true
-                        // });
-                    }
+                    console.log(data.toString('utf8'));
                 });
 
                 newfimage
