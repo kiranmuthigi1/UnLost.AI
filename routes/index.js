@@ -87,9 +87,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
                 // });
                 // await fs.removeSync(`uploads/lost/${labelname}`);
                 
-                res.status(200).json({
-                    status: "success"
-                });
+                res.status(200).send("<h1>Data Successfully Submitted!</h1>");
             }).catch(err => {
                 console.log(err);
                 res.status(500).json({
@@ -142,9 +140,7 @@ router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => 
                     .save()
                     .then((result) => {
                         console.log(result);
-                        res.status(200).json({
-                            status: "success"
-                        });
+                        res.status(200).send("<h1>Data Successfully Submitted!</h1>");
                     }).catch(err => {
                         console.log(err);
                         res.status(500).json({
