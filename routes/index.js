@@ -120,7 +120,7 @@ router.post('/uploadfound', upload.array("lostImage", 10), (req, res, next) => {
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
-
+        console.log(req.body);
         const newfimage = new found({
             _id: mongooseId,
             label: labelname,

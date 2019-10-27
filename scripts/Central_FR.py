@@ -24,6 +24,7 @@ def triplet_loss(y_true, y_pred, alpha=0.2):
 
 def check_func(argum1):
 
+    to_email = ['kiranmuthigi123@gmail.com']
     np.set_printoptions(threshold=sys.maxsize)
     print("inside: ", argum1)
     FRmodel = faceRecoModel(input_shape=(3, 96, 96))
@@ -48,6 +49,7 @@ def check_func(argum1):
         for file in imgs2:
             if file.endswith(".pkl"):
                 imgs.append(file)
+        #horussurya needforspeed
         for j in imgs:
             with open(join(fadd,j), 'rb') as f:
                 val = pickle.load(f)
@@ -59,6 +61,43 @@ def check_func(argum1):
     if(check==1):
         print(best_match_found)
         print(cur_b_sc)
+        import smtplib
+        from email.mime.text import MIMEText
+        from email.mime.multipart import MIMEMultipart
+
+        email_user = 'horussurya@gmail.com'
+        email_password = 'lemniscate#11235'
+        email_send = to_email[0]
+        lat = 0.0
+        long = 0.0
+        subject = 'subject'
+
+        msg = MIMEMultipart()
+        msg['From'] = email_user
+        msg['To'] = email_send
+        msg['Subject'] = subject
+
+        body = 'Hi the missing person you reported has been found! The match error was very low! (around '+str(cur_b_sc)+').'
+        body = body + 'The person was found at ('+str(lat) +"   " +str(long)+')!'
+        msg.attach(MIMEText(body, 'plain'))
+
+        # filename='filename'
+        # attachment  =open(filename,'rb')
+
+        # part = MIMEBase('application','octet-stream')
+        # part.set_payload((attachment).read())
+        # encoders.encode_base64(part)
+        # part.add_header('Content-Disposition',"attachment; filename= "+filename)
+
+        # msg.attach(part)
+        text = msg.as_string()
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(email_user, email_password)
+
+        server.sendmail(email_user, email_send, text)
+        server.quit()
+
         sys.stdout.flush()
     else:
         print("NULL")
@@ -68,7 +107,3 @@ def check_func(argum1):
 if __name__=="__main__":
     argument1 = sys.argv[1]
     check_func(argument1)
-
-
-
-
