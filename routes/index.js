@@ -120,13 +120,11 @@ router.post('/uploadfound', upload.array("lostImage", 10), (req, res, next) => {
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
-<<<<<<< HEAD
-=======
 
->>>>>>> d85c871a4397a9e18ae09da4876e2f0f9ccf8175
         const newfimage = new found({
             _id: mongooseId,
             label: labelname,
+            email: req.body.email
         });
 
         
@@ -161,7 +159,6 @@ router.post('/uploadfound', upload.array("lostImage", 10), (req, res, next) => {
     }
 });
 
-<<<<<<< HEAD
 /*router.post("/register", (req, res, next) => {
     const mongooseId = mongoose.Types.ObjectId();
     const labelname = mongooseId;
@@ -188,33 +185,6 @@ router.post('/uploadfound', upload.array("lostImage", 10), (req, res, next) => {
             })
         });
 });*/
-=======
-// router.post("/register", (req, res, next) => {
-//     const mongooseId = mongoose.Types.ObjectId();
-//     const labelname = mongooseId;
-//     const emailId = req.body.email;
-//     const newlost = new lost({
-//         _id: mongooseId,
-//         label: labelname,
-//         email: emailId
-//     });
-
-//     newlost
-//         .save()
-//         .then((result) => {
-//             console.log(result);
-//             res.status(200).json({
-//                 status: "success"
-//             });
-//         })
-//         .catch(err => {
-//             console.log(err);
-//             res.status(200).json({
-//                 status: "fail"
-//             })
-//         });
-// });
->>>>>>> d85c871a4397a9e18ae09da4876e2f0f9ccf8175
 
 
 module.exports = router;
