@@ -63,11 +63,11 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
-        
+	console.log(req.body);        
         const newimage = new lost({
             _id: mongooseId,
             label: labelname,
-
+	    email : req.body.email
         });
 
         
@@ -121,12 +121,9 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
-        const email = req.body.email;
-
         const newfimage = new found({
             _id: mongooseId,
             label: labelname,
-            email: email
         });
 
         
@@ -161,10 +158,11 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
     }
 });
 
-router.post("/register", (req, res, next) => {
+/*router.post("/register", (req, res, next) => {
     const mongooseId = mongoose.Types.ObjectId();
     const labelname = mongooseId;
     const emailId = req.body.email;
+    console.log(req.body);
     const newlost = new lost({
         _id: mongooseId,
         label: labelname,
@@ -185,7 +183,7 @@ router.post("/register", (req, res, next) => {
                 status: "fail"
             })
         });
-});
+});*/
 
 
 module.exports = router;
