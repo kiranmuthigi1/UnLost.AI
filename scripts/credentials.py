@@ -1,0 +1,5 @@
+ID = 'bzJzCTiNjafdtg'  
+SECRET = 'CR9Lb_THqhxHvEDBHh1wM4qC3Lo'  
+PASSWORD = 'abcapril19'  
+AGENT = 'Example Bot by /u/example_bot'  
+USERNAME = 'winchester1904'  
