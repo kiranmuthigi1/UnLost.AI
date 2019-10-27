@@ -100,11 +100,16 @@
                     <div class="col-md-6">
                         <center>
                         <h3>I found Someone!!</h3>
-                        <form method="POST" enctype='multipart/form-data' action="http://zemotacqy.tech/api/uploadfound">
+			<form method="POST" enctype='multipart/form-data' onsubmit="window.location.href='index.html';" action="http://zemotacqy.tech/api/uploadfound">
+            <input type="text"  class="mu-primary-btn" id="email" name="email" />
+            <input type="file" class="mu-primary-btn" name="foundImage" placeholder="Click Photo" accept="image/*" capture="camera" multiple />
+            <input class="mu-primary-btn" id="register-btn" type="submit"  value="submit"/>
+        </form>
+                        <!--<form method="POST" enctype='multipart/form-data' action="http://zemotacqy.tech/api/uploadfound">
                           <input type="file" class="mu-primary-btn" name="foundImage" placeholder="Click Photo" accept="image/*" capture="camera"/>
                           <input type="text" class="mu-primary-btn" id="email" name="email" />
                           <input class="mu-primary-btn" type="submit" value="submit"/>
-                        </form>
+                        </form>-->
                       </center>
                     </div>
                 
@@ -562,7 +567,7 @@
 	
     <!-- Custom js -->
 	<script type="text/javascript" src="assets/js/custom.js"></script>
-	
+		
     
   </body>
 </html>
