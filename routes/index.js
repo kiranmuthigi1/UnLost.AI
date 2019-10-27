@@ -113,6 +113,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
 });
 
 router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => {
+    console.log(req.body);
     if(req.files.size<=0 ) {
         res.status(500).json({
             status: "fail"
@@ -120,6 +121,7 @@ router.post('/uploadfound', upload.array("foundImage", 10), (req, res, next) => 
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
+	console.log(req.body);
         const newfimage = new found({
             _id: mongooseId,
             label: labelname,
