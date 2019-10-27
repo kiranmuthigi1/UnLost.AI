@@ -63,7 +63,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
-	console.log(req.body);        
+
         const newimage = new lost({
             _id: mongooseId,
             label: labelname,
@@ -72,7 +72,6 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
 
         
         rearrangeFiles(labelname, req.files, 'lost');
-
         newimage
             .save()
             .then(async (result) => {
@@ -113,7 +112,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
     }
 });
 
-router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, next) => {
+router.post('/uploadfound', upload.array("lostImage", 10), (req, res, next) => {
     if(req.files.size<=0 ) {
         res.status(500).json({
             status: "fail"
@@ -121,6 +120,10 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d85c871a4397a9e18ae09da4876e2f0f9ccf8175
         const newfimage = new found({
             _id: mongooseId,
             label: labelname,
@@ -158,6 +161,7 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
     }
 });
 
+<<<<<<< HEAD
 /*router.post("/register", (req, res, next) => {
     const mongooseId = mongoose.Types.ObjectId();
     const labelname = mongooseId;
@@ -184,6 +188,33 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
             })
         });
 });*/
+=======
+// router.post("/register", (req, res, next) => {
+//     const mongooseId = mongoose.Types.ObjectId();
+//     const labelname = mongooseId;
+//     const emailId = req.body.email;
+//     const newlost = new lost({
+//         _id: mongooseId,
+//         label: labelname,
+//         email: emailId
+//     });
+
+//     newlost
+//         .save()
+//         .then((result) => {
+//             console.log(result);
+//             res.status(200).json({
+//                 status: "success"
+//             });
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             res.status(200).json({
+//                 status: "fail"
+//             })
+//         });
+// });
+>>>>>>> d85c871a4397a9e18ae09da4876e2f0f9ccf8175
 
 
 module.exports = router;
