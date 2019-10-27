@@ -63,16 +63,15 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
-        
+        const email = req.body.email;
         const newimage = new lost({
             _id: mongooseId,
             label: labelname,
-
+            email: email
         });
 
         
         rearrangeFiles(labelname, req.files, 'lost');
-
         newimage
             .save()
             .then(async (result) => {
@@ -113,7 +112,7 @@ router.post('/uploadlost', upload.array("lostImage", 10), (req, res, next) => {
     }
 });
 
-router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, next) => {
+router.post('/uploadfound', upload.array("lostImage", 10), (req, res, next) => {
     if(req.files.size<=0 ) {
         res.status(500).json({
             status: "fail"
@@ -121,12 +120,10 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
     } else {
         const mongooseId = mongoose.Types.ObjectId();
         const labelname = mongooseId;
-        const email = req.body.email;
 
         const newfimage = new found({
             _id: mongooseId,
             label: labelname,
-            email: email
         });
 
         
@@ -161,31 +158,31 @@ router.post('/uploadfound', upload.array("foundImage", 10), async (req, res, nex
     }
 });
 
-router.post("/register", (req, res, next) => {
-    const mongooseId = mongoose.Types.ObjectId();
-    const labelname = mongooseId;
-    const emailId = req.body.email;
-    const newlost = new lost({
-        _id: mongooseId,
-        label: labelname,
-        email: emailId
-    });
+// router.post("/register", (req, res, next) => {
+//     const mongooseId = mongoose.Types.ObjectId();
+//     const labelname = mongooseId;
+//     const emailId = req.body.email;
+//     const newlost = new lost({
+//         _id: mongooseId,
+//         label: labelname,
+//         email: emailId
+//     });
 
-    newlost
-        .save()
-        .then((result) => {
-            console.log(result);
-            res.status(200).json({
-                status: "success"
-            });
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(200).json({
-                status: "fail"
-            })
-        });
-});
+//     newlost
+//         .save()
+//         .then((result) => {
+//             console.log(result);
+//             res.status(200).json({
+//                 status: "success"
+//             });
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             res.status(200).json({
+//                 status: "fail"
+//             })
+//         });
+// });
 
 
 module.exports = router;
