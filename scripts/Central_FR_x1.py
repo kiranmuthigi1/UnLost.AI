@@ -25,9 +25,8 @@ def triplet_loss(y_true, y_pred, alpha=0.2):
 def check_func(argum1):
 
     to_email = ['kiranmuthigi123@gmail.com']
-    
     np.set_printoptions(threshold=sys.maxsize)
-    print("inside: ", argum1)
+    #print("inside: ", argum1)
     FRmodel = faceRecoModel(input_shape=(3, 96, 96))
     lost = '/home/zemotacqy/hack-moscow-backend/routes/../uploads/lost'
     #print("lost FilePath: ", lost)
@@ -62,33 +61,27 @@ def check_func(argum1):
     if(check==1):
         print(best_match_found)
         print(cur_b_sc)
-        '''
-        #if 1>0:
         import smtplib
         from email.mime.text import MIMEText
         from email.mime.multipart import MIMEMultipart
 
-        #email_user = 'destine.bitm@gmail.com'
-        #email_password = 'K11K4B19R14'
         email_user = 'horussurya@gmail.com'
         email_password = 'lemniscate#11235'
-        email_send ='kiranmuthigi123@gmail.com'
+        email_send = to_email[0]
         print(email_send)
-        lat = '55.815480'
-        lon = '37.575385'
+        lat ='55.815480'
+        long ='7.575385'
         subject = 'Unlost.ai'
 
         msg = MIMEMultipart()
         msg['From'] = email_user
         msg['To'] = email_send
         msg['Subject'] = subject
-        print("On the way")
-        body = 'Hi, there.'
-        
-        
-        #body = 'Hi the missing person you reported has been found! The match error was very low! (around 0.2).The person was found at ('+lat +'   ' +lon+')!'
+
+        body = 'Hi the missing person you reported has been found! The match error was very low! (around '+str(cur_b_sc)+').'
+        body = body + 'The person was found at ('+lat +"   " +l+')!'
         msg.attach(MIMEText(body, 'plain'))
-      
+
         # filename='filename'
         # attachment  =open(filename,'rb')
 
@@ -97,46 +90,16 @@ def check_func(argum1):
         # encoders.encode_base64(part)
         # part.add_header('Content-Disposition',"attachment; filename= "+filename)
 
-        
-	# msg.attach(part)
+        # msg.attach(part)
         text = msg.as_string()
-        print("text:", text)
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
         server.login(email_user, email_password)
-        print("Loggedin")
+
         server.sendmail(email_user, email_send, text)
-        print("sent mail") 
         server.quit()
-        
-        from sendgrid import SendGridAPIClient
-        from sendgrid.helpers.mail import Mail
-        message = Mail(from_email="horussurya@gmail.com", to_emails="mranjan1398@gmail.com",  subject="hello", html_content="<h1>helllo</h1>")
-        try:
-            sg = SendGridAPIClient("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")
-            response = sg.send(message)
-        except Exception as e:
-            print(e.message)
-        ''' 
-        lat = "55.815480"
-        lon = "37.575385"
-        from sendgrid import SendGridAPIClient 
-        from sendgrid.helpers.mail import Mail 
-        html_msg = '<p>Hi the missing person you reported has been found! The match error was very low! (around 0.2).The person was found at ('+lat +'   ' +lon+')!<br/>The distance to the home location is 6508 km. The nearest authority is Police Station, Moskva, 125047 </p>'
-        message = Mail( from_email='shivampkumar@gmail.com',  to_emails='bhaskar.aayush.brc@gmail.com', subject='Unlost.ai', html_content=html_msg)
-        try:
-            sg = SendGridAPIClient('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')
-            response = sg.send(message)
-        except Exception as e:
-            print(e.message)
+
         sys.stdout.flush()
     else:
         print("NULL")
         print("NULL")
-        sys.stdout.flush()
-
-if __name__=="__main__":
-    print("dsfsdf")
-    sys.stdout.flush()
-    argument1 = sys.argv[1]
-    check_func(argument1)

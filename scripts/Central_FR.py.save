@@ -25,7 +25,7 @@ def triplet_loss(y_true, y_pred, alpha=0.2):
 def check_func(argum1):
 
     to_email = ['kiranmuthigi123@gmail.com']
-    
+    '''
     np.set_printoptions(threshold=sys.maxsize)
     print("inside: ", argum1)
     FRmodel = faceRecoModel(input_shape=(3, 96, 96))
@@ -62,7 +62,7 @@ def check_func(argum1):
     if(check==1):
         print(best_match_found)
         print(cur_b_sc)
-        '''
+        
         #if 1>0:
         import smtplib
         from email.mime.text import MIMEText
@@ -108,35 +108,28 @@ def check_func(argum1):
         server.sendmail(email_user, email_send, text)
         print("sent mail") 
         server.quit()
-        
-        from sendgrid import SendGridAPIClient
-        from sendgrid.helpers.mail import Mail
-        message = Mail(from_email="horussurya@gmail.com", to_emails="mranjan1398@gmail.com",  subject="hello", html_content="<h1>helllo</h1>")
-        try:
-            sg = SendGridAPIClient("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")
-            response = sg.send(message)
-        except Exception as e:
-            print(e.message)
-        ''' 
-        lat = "55.815480"
-        lon = "37.575385"
-        from sendgrid import SendGridAPIClient 
-        from sendgrid.helpers.mail import Mail 
-        html_msg = '<p>Hi the missing person you reported has been found! The match error was very low! (around 0.2).The person was found at ('+lat +'   ' +lon+')!<br/>The distance to the home location is 6508 km. The nearest authority is Police Station, Moskva, 125047 </p>'
-        message = Mail( from_email='shivampkumar@gmail.com',  to_emails='bhaskar.aayush.brc@gmail.com', subject='Unlost.ai', html_content=html_msg)
-        try:
-            sg = SendGridAPIClient('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')
-            response = sg.send(message)
-        except Exception as e:
-            print(e.message)
-        sys.stdout.flush()
-    else:
-        print("NULL")
-        print("NULL")
-        sys.stdout.flush()
 
-if __name__=="__main__":
-    print("dsfsdf")
-    sys.stdout.flush()
-    argument1 = sys.argv[1]
-    check_func(argument1)
+    if 1>0:
+       
+        import sendgrid
+        client = sendgrid.SendGridClient("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")
+        message = sendgrid.Mail()
+        message.add_to("test@sendgrid.com")
+        message.set_from("horussurya@gmail.com")
+        message.set_subject("Unlost.ai")
+        message.set_html("sdjf")
+        client.send(message)
+    '''    
+    if 1>0:
+        from sendgrid import SendGridAPIClient
+	from sendgrid.helpers.mail import Mail message = Mail(
+    from_email='from_email@example.com', sys.stdout.flush()
+    to_emails='to@example.com', else:
+    subject='Sending with Twilio SendGrid is Fun', print("NULL")
+    html_content='<strong>and easy to do anywhere, even with Python</strong>') print("NULL") try: sys.stdout.flush()
+    sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY')) if __name__=="__main__":
+    response = sg.send(message) print("dsfsdf")
+    print(response.status_code) sys.stdout.flush()
+    print(response.body) argument1 = sys.argv[1]
+    print(response.headers) check_func(argument1) except Exception as e:
+    print(e.message)
