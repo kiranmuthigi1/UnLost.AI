@@ -60,7 +60,7 @@
 		      <a class="navbar-brand" href="#">Unlost.ai</a>
 
 		      <!-- Image Logo -->
-		      <!-- <a class="navbar-brand" href="#"><img src="assets/images/logo.png"></a> -->
+		      <!-- <a class="navbar-brand" href="#"><img src="assets/images/logcdo.png"></a> -->
 
 
 		    </div>
@@ -88,7 +88,6 @@
 
 					<!-- Start Single slide -->
 					<div class="mu-featured-slider-single">
-						<center><img style="width: 15vw;" src = "./assets/images/unlost.png"/></center>
 						<img src="https://previews.123rf.com/images/suradin/suradin1201/suradin120100263/11999178-helping-hands.jpg">
 						<div class="mu-featured-slider-content">
 							<h1>WELCOME TO UnLost.ai</h1>
